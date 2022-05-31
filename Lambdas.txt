@@ -1,0 +1,20 @@
+its_time = LAMBDA(when, first_date, category, category_table,
+    LET(
+        review_dates, _get_review_intervals(category, category_table) + first_date,
+        when_in_review_dates, ISNUMBER(MATCH(when,review_dates,0)),
+
+        when_in_review_dates
+    )
+);
+
+
+
+_get_review_intervals = LAMBDA(category_to_look, category_table,
+    LET(
+        category_table_first_column, INDEX(category_table,SEQUENCE(ROWS(category_table)),1),
+        n_row, MATCH(category_to_look,category_table_first_column,0),
+        cols_to_get, SEQUENCE(1,COLUMNS(category_table)-1,2),
+
+        INDEX(category_table,n_row,cols_to_get)
+    )
+);
